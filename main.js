@@ -14,7 +14,7 @@ const MemeDevice = require('jinsmemesdk-node-noble-x');
 
 
 // Post this machine's local IP address to server.
-const postData = 'key='+ config.lan_ip_exchanger_key +'&ip='+ getLocalAddress();
+const postData = `key=${config.lan_ip_exchanger_key}&ip=${getLocalAddress()}`;
 
 request.post({
   url: config.lan_ip_exchanger_url,
@@ -31,7 +31,7 @@ request.post({
 });
 
 
-const port = 26236;
+const port = process.env.PORT || 26236;
 
 function startServer() {
   const wss = new WebSocketServer({
@@ -48,10 +48,10 @@ function startServer() {
   startJinsMeme();
 }
 
-let memeData = {};
+const memeData = {};
 
 function startJinsMeme() {
-  let memeDevice = new MemeDevice();
+  const memeDevice = new MemeDevice();
 
   memeDevice.setAppClientID(config.appClientId, config.clientSecret,
     () => {
